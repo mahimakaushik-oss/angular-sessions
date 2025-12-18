@@ -1,0 +1,134 @@
+<!-- student-manager.component.html - COMPLETE VERSION -->
+
+<!-- Edit Form Section -->
+<div class="edit-form">
+  <h3>📝 Edit Student Information</h3>
+
+  <div class="form-group">
+    <label>Name:</label>
+    <input [(ngModel)]="studentName" type="text" placeholder="Enter name">
+  </div>
+
+  <div class="form-group">
+    <label>Student ID:</label>
+    <input [(ngModel)]="studentId" type="text" placeholder="Enter ID">
+  </div>
+
+  <div class="form-group">
+    <label>Age:</label>
+    <input [(ngModel)]="age" type="number" placeholder="Enter age">
+  </div>
+
+  <div class="form-group">
+    <label>Email:</label>
+    <input [(ngModel)]="email" type="email" placeholder="Enter email">
+  </div>
+
+  <div class="form-group">
+    <label>Profile Image URL:</label>
+    <input [(ngModel)]="profileImage" type="text" placeholder="Enter image URL">
+  </div>
+</div>
+
+<!-- Profile Card Section -->
+<div class="profile-card">
+  <h2>👤 Student Profile</h2>
+
+  <div class="profile-header">
+    <img [src]="profileImage" [alt]="studentName" class="profile-img">
+    <span [class]="statusClass" class="status-badge">
+      {{ isEnrolled ? '✓ Enrolled' : '✗ Not Enrolled' }}
+    </span>
+  </div>
+
+  <div class="info-row">
+    <strong>Name:</strong> {{ studentName }}
+  </div>
+
+  <div class="info-row">
+    <strong>ID:</strong> {{ studentId }}
+  </div>
+
+  <div class="info-row">
+    <strong>Age:</strong> {{ age }} years old
+  </div>
+
+  <div class="info-row">
+    <strong>Email:</strong> {{ email }}
+  </div>
+
+  <div class="info-row">
+    <strong>Status:</strong> {{ isEnrolled ? 'Enrolled' : 'Not Enrolled' }}
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="actions">
+    <button (click)="enrollStudent()" [disabled]="isEnrolled">
+      Enroll Student
+    </button>
+
+    <button (click)="unenrollStudent()" [disabled]="!isEnrolled">
+      Unenroll Student
+    </button>
+
+    <button (click)="toggleEnrollment()">
+      Toggle Status
+    </button>
+  </div>
+</div>
+
+<!-- Courses Section -->
+<div class="courses-section">
+  <h3>📚 Enrolled Courses</h3>
+
+  <div class="course-input">
+    <input
+      [(ngModel)]="newCourse"
+      type="text"
+      placeholder="Enter course name"
+      (keyup.enter)="addCourse()">
+    <button (click)="addCourse()">Add Course</button>
+  </div>
+
+  <ul class="course-list">
+    <li *ngFor="let course of courses; let i = index">
+      {{ i + 1 }}. {{ course }}
+      <button (click)="removeCourse(i)" class="delete-btn">Delete</button>
+    </li>
+  </ul>
+
+  <p><strong>Total Courses:</strong> {{ courses.length }}</p>
+</div>
+
+<!-- Grades Section -->
+<div class="grades-section">
+  <h3>📊 Grade Calculator</h3>
+
+  <div class="grade-inputs">
+    <div class="form-group">
+      <label>Math (out of 100):</label>
+      <input [(ngModel)]="mathScore" type="number" min="0" max="100">
+    </div>
+
+    <div class="form-group">
+      <label>Science (out of 100):</label>
+      <input [(ngModel)]="scienceScore" type="number" min="0" max="100">
+    </div>
+
+    <div class="form-group">
+      <label>English (out of 100):</label>
+      <input [(ngModel)]="englishScore" type="number" min="0" max="100">
+    </div>
+  </div>
+
+  <button (click)="calculateGrades()" class="calculate-btn">
+    Calculate Grade
+  </button>
+
+  <div class="results" *ngIf="totalScore > 0">
+    <p><strong>Total Score:</strong> {{ totalScore }} / 300</p>
+    <p><strong>Percentage:</strong> {{ percentage.toFixed(2) }}%</p>
+    <p><strong>Grade:</strong> <span [class]="'grade-' + grade">{{ grade }}</span></p>
+    <p><strong>Status:</strong> {{ percentage >= 40 ? 'PASS ✓' : 'FAIL ✗' }}</p>
+  </div>
+</div>
